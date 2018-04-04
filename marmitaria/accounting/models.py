@@ -106,7 +106,7 @@ class Receita(BaseModel, models.Model):
         else:
             if self.valor != self._loaded_values['valor']:
                 centro = CentroDeCusto.objects.get(id=self.centro_de_custo.id)
-                centro.total += (self._loaded_values['valor'] - self.valor)
+                centro.total += (self.valor - self._loaded_values['valor'])
                 centro.save()
 
         super(Receita, self).save(*args, **kwargs)
