@@ -102,6 +102,8 @@ venv.bak/
 
 db.sqlite3
 marmitaria/static/admin
+marmitaria/static/jet
+marmitaria/static/range_filter
 
 
 # End of https://www.gitignore.io/api/python
