@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['almoco.pauloroger.tk']
 
 INSTALLED_APPS = [
     'accounting.apps.AccountingConfig',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
