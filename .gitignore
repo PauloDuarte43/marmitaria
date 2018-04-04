@@ -101,6 +101,7 @@ venv.bak/
 .mypy_cache/
 
 db.sqlite3
+marmitaria/static/admin
 
 
 # End of https://www.gitignore.io/api/python
