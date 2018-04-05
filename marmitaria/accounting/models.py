@@ -86,6 +86,12 @@ class Despesa(BaseModel, models.Model):
 
         super(Despesa, self).save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        centro = CentroDeCusto.objects.get(id=self.centro_de_custo.id)
+        centro.total += self.valor
+        centro.save()
+        super(Despesa, self).delete(*args, **kwargs)
+
     def __unicode__(self):
         return self.nome
 
@@ -110,6 +116,12 @@ class Receita(BaseModel, models.Model):
                 centro.save()
 
         super(Receita, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        centro = CentroDeCusto.objects.get(id=self.centro_de_custo.id)
+        centro.total -= self.valor
+        centro.save()
+        super(Receita, self).delete(*args, **kwargs)
 
     def __unicode__(self):
         return self.nome
