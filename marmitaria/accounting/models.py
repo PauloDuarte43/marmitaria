@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import datetime
 import decimal
 from django.db import models
+from django.db.models import DEFERRED
 from django.core.exceptions import ValidationError
 from django.template.defaultfilters import floatformat
 
@@ -28,7 +29,7 @@ class BaseModel(object):
 
 
 class Produto(models.Model):
-    nome = models.CharField(max_length=40)
+    nome = models.CharField(max_length=40, unique=True)
 
     def __unicode__(self):
         return self.nome
@@ -82,8 +83,7 @@ class Despesa(BaseModel, models.Model):
         val_tmp = decimal.Decimal()
         prod_despesa = ProdutoDespesa.objects.filter(despesa=self)
         for prod in prod_despesa:
-            for i in range(prod.quantidade):
-                val_tmp += prod.valor
+            val_tmp += (prod.valor * prod.quantidade)
         return floatformat(val_tmp, 2)
 
     def clean(self):
@@ -116,8 +116,7 @@ class Receita(BaseModel, models.Model):
         val_tmp = decimal.Decimal()
         prod_receita = ProdutoReceita.objects.filter(receita=self)
         for prod in prod_receita:
-            for i in range(prod.quantidade):
-                val_tmp += prod.valor
+            val_tmp += (prod.valor * prod.quantidade)
         return floatformat(val_tmp, 2)
 
     def save(self, *args, **kwargs):
@@ -134,7 +133,7 @@ class ProdutoDespesa(BaseModel, models.Model):
     produto = models.ForeignKey(Produto)
     despesa = models.ForeignKey(Despesa)
     valor = models.DecimalField(max_digits=19, decimal_places=2)
-    quantidade = models.IntegerField(default=1)
+    quantidade = models.DecimalField(max_digits=19, decimal_places=4)
 
     def save(self, *args, **kwargs):
         if self._state.adding:
@@ -169,7 +168,7 @@ class ProdutoReceita(BaseModel, models.Model):
     produto = models.ForeignKey(Produto)
     receita = models.ForeignKey(Receita)
     valor = models.DecimalField(max_digits=19, decimal_places=2)
-    quantidade = models.IntegerField(default=1)
+    quantidade = models.DecimalField(max_digits=19, decimal_places=4)
 
     def save(self, *args, **kwargs):
         if self._state.adding:
