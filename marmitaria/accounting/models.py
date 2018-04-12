@@ -145,21 +145,18 @@ class ProdutoDespesa(BaseModel, models.Model):
                 self.despesa.valor = 0
                 self.despesa.save()
 
-            for i in range(self.quantidade):
-                centro.total -= self.valor
-                centro.save()
+            centro.total -= (self.valor * self.quantidade)
+            centro.save()
         else:
             if self.valor != self._loaded_values['valor']:
                 centro = CentroDeCusto.objects.get(id=self.despesa.centro_de_custo.id)
-                for i in range(self.quantidade):
-                    centro.total -= (self.valor - self._loaded_values['valor'])
-                    centro.save()
+                centro.total -= ((self.valor * self.quantidade) - (self._loaded_values['valor'] * self._loaded_values['quantidade']))
+                centro.save()
         super(ProdutoDespesa, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         centro = CentroDeCusto.objects.get(id=self.despesa.centro_de_custo.id)
-        for i in range(self.quantidade):
-            centro.total += self.valor
+        centro.total += (self.valor * self.quantidade)
         centro.save()
         super(ProdutoDespesa, self).delete(*args, **kwargs)
 
@@ -180,20 +177,17 @@ class ProdutoReceita(BaseModel, models.Model):
                 self.receita.valor = 0
                 self.receita.save()
 
-            for i in range(self.quantidade):
-                centro.total += self.valor
-                centro.save()
+            centro.total += (self.valor * self.quantidade)
+            centro.save()
         else:
             if self.valor != self._loaded_values['valor']:
                 centro = CentroDeCusto.objects.get(id=self.receita.centro_de_custo.id)
-                for i in range(self.quantidade):
-                    centro.total += (self.valor - self._loaded_values['valor'])
-                    centro.save()
+                centro.total += ((self.valor * self.quantidade) - (self._loaded_values['valor'] * self._loaded_values['quantidade']))
+                centro.save()
         super(ProdutoReceita, self).save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
         centro = CentroDeCusto.objects.get(id=self.receita.centro_de_custo.id)
-        for i in range(self.quantidade):
-            centro.total -= self.valor
+        centro.total -= (self.valor * self.quantidade)
         centro.save()
         super(ProdutoReceita, self).delete(*args, **kwargs)
