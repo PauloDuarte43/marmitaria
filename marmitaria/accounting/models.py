@@ -87,9 +87,8 @@ class Despesa(BaseModel, models.Model):
         return floatformat(val_tmp, 2)
 
     def clean(self):
-        #tmp = self.centro_de_custo.total - self.valor
-        #if tmp < 0:
-        #    raise ValidationError({'centro_de_custo':'Centro de custo sem fundos, selecione outro centro ou adicione nova receita'})
+        if self.centro_de_custo.id != self._loaded_values['centro_de_custo_id']:
+            raise ValidationError({'centro_de_custo':'Centro de custo nao pode ser alterado'})
         super(Despesa, self).clean()
 
     def save(self, *args, **kwargs):
@@ -119,6 +118,11 @@ class Receita(BaseModel, models.Model):
             val_tmp += (prod.valor * prod.quantidade)
         return floatformat(val_tmp, 2)
 
+    def clean(self):
+        if self.centro_de_custo.id != self._loaded_values['centro_de_custo_id']:
+            raise ValidationError({'centro_de_custo':'Centro de custo nao pode ser alterado'})
+        super(Receita, self).clean()
+
     def save(self, *args, **kwargs):
         super(Receita, self).save(*args, **kwargs)
 
@@ -135,6 +139,12 @@ class ProdutoDespesa(BaseModel, models.Model):
     valor = models.DecimalField(max_digits=19, decimal_places=2)
     quantidade = models.DecimalField(max_digits=19, decimal_places=4)
 
+    def clean(self):
+        #tmp = self.centro_de_custo.total - self.valor
+        #if tmp < 0:
+        #    raise ValidationError({'centro_de_custo':'Centro de custo sem fundos, selecione outro centro ou adicione nova receita'})
+        super(ProdutoDespesa, self).clean()
+
     def save(self, *args, **kwargs):
         if self._state.adding:
             centro = CentroDeCusto.objects.get(id=self.despesa.centro_de_custo.id)
@@ -148,7 +158,8 @@ class ProdutoDespesa(BaseModel, models.Model):
             centro.total -= (self.valor * self.quantidade)
             centro.save()
         else:
-            if self.valor != self._loaded_values['valor']:
+            if (self.valor != self._loaded_values['valor'] or
+                self.quantidade != self._loaded_values['quantidade']):
                 centro = CentroDeCusto.objects.get(id=self.despesa.centro_de_custo.id)
                 centro.total -= ((self.valor * self.quantidade) - (self._loaded_values['valor'] * self._loaded_values['quantidade']))
                 centro.save()
@@ -180,7 +191,8 @@ class ProdutoReceita(BaseModel, models.Model):
             centro.total += (self.valor * self.quantidade)
             centro.save()
         else:
-            if self.valor != self._loaded_values['valor']:
+            if (self.valor != self._loaded_values['valor'] or
+                self.quantidade != self._loaded_values['quantidade']):
                 centro = CentroDeCusto.objects.get(id=self.receita.centro_de_custo.id)
                 centro.total += ((self.valor * self.quantidade) - (self._loaded_values['valor'] * self._loaded_values['quantidade']))
                 centro.save()
