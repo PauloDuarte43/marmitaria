@@ -87,8 +87,9 @@ class Despesa(BaseModel, models.Model):
         return floatformat(val_tmp, 2)
 
     def clean(self):
-        if self.centro_de_custo.id != self._loaded_values['centro_de_custo_id']:
-            raise ValidationError({'centro_de_custo':'Centro de custo nao pode ser alterado'})
+        if not self._state.adding:
+            if self.centro_de_custo.id != self._loaded_values['centro_de_custo_id']:
+                raise ValidationError({'centro_de_custo':'Centro de custo nao pode ser alterado'})
         super(Despesa, self).clean()
 
     def save(self, *args, **kwargs):
@@ -119,8 +120,9 @@ class Receita(BaseModel, models.Model):
         return floatformat(val_tmp, 2)
 
     def clean(self):
-        if self.centro_de_custo.id != self._loaded_values['centro_de_custo_id']:
-            raise ValidationError({'centro_de_custo':'Centro de custo nao pode ser alterado'})
+        if not self._state.adding:
+            if self.centro_de_custo.id != self._loaded_values['centro_de_custo_id']:
+                raise ValidationError({'centro_de_custo':'Centro de custo nao pode ser alterado'})
         super(Receita, self).clean()
 
     def save(self, *args, **kwargs):
