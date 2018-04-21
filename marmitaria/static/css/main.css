@@ -1,3 +1,15 @@
 .form-inline > * {
     margin:5px 3px;
  }
+
+ .card-header-centro {
+    background-color: #89d3ff;
+ }
+
+ .card-header-receita {
+    background-color: #89ff8c;
+ }
+
+ .card-header-despesa {
+    background-color: #ff9889;
+ }

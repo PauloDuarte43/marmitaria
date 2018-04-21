@@ -1,7 +1,65 @@
 {% extends "base.html" %} {% block content %}
+
 <div class="row">
     <div class="col-12">
-        
+        {% for c in centro %}
+        <div class="row">
+            <div class="col-12 col-lg-3">
+                <div class="card">
+                    <h5 class="card-header card-header-centro">
+                        Centro de Custo
+                    </h5>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ c.nome }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ c.descricao }}</h6>
+                        <p class="card-text">{{ c.total }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            {% for d in despesas %}
+            <div class="col-12 col-lg-3">
+                <div class="card">
+                    <h5 class="card-header card-header-despesa">
+                        #{{forloop.counter}} Despesa
+                    </h5>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ d.0 }}</h5>
+                        <h6 class="card-subtitle mb-2">Qtd: {{ d.1.quantidade.normalize }}</h6>
+                        <p class="card-text">Total: {{ d.1.total|floatformat:2 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            {% for r in receitas %}
+            <div class="col-12 col-lg-3">
+                <div class="card">
+                    <h5 class="card-header card-header-receita">
+                        #{{forloop.counter}} Receita
+                    </h5>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ r.0 }}</h5>
+                        <h6 class="card-subtitle mb-2">{{ r.1.quantidade.normalize }}</h6>
+                        <p class="card-text">{{ r.1.total|floatformat:2 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor%}
+        </div>
     </div>
 </div>
 
