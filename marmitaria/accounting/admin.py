@@ -29,7 +29,7 @@ class ProdutoAdmin(BaseAdmin, admin.ModelAdmin):
 
 
 class ProdutoDespesaAdmin(BaseAdmin, admin.ModelAdmin):
-    list_display = ('produto', 'valor')
+    list_display = ('produto', 'valor', 'quantidade')
 
     def get_model_perms(self, request):
         """
@@ -38,7 +38,7 @@ class ProdutoDespesaAdmin(BaseAdmin, admin.ModelAdmin):
 
 
 class ProdutoReceitaAdmin(BaseAdmin, admin.ModelAdmin):
-    list_display = ('produto', 'valor')
+    list_display = ('produto', 'valor', 'quantidade')
 
     def get_model_perms(self, request):
         """

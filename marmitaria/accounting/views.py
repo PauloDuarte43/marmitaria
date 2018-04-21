@@ -24,11 +24,11 @@ def despesa(request):
     for obj in queryset:
         if not products.get(obj.produto.nome):
             products[obj.produto.nome] = {
-                'quantidade': 0,
-                'total': 0
+                'quantidade': decimal.Decimal(0),
+                'total': decimal.Decimal(0)
             }
         products[obj.produto.nome]['quantidade'] += obj.quantidade
-        products[obj.produto.nome]['total'] += obj.valor
+        products[obj.produto.nome]['total'] += (obj.valor * obj.quantidade)
 
     context = {
         'products': products
@@ -44,11 +44,11 @@ def receita(request):
     for obj in queryset:
         if not products.get(obj.produto.nome):
             products[obj.produto.nome] = {
-                'quantidade': 0,
-                'total': 0
+                'quantidade': decimal.Decimal(0),
+                'total': decimal.Decimal(0)
             }
         products[obj.produto.nome]['quantidade'] += obj.quantidade
-        products[obj.produto.nome]['total'] += obj.valor
+        products[obj.produto.nome]['total'] += (obj.valor * obj.quantidade)
 
     context = {
         'products': products
