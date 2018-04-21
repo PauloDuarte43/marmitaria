@@ -93,7 +93,7 @@ def index(request):
     despesas, _ = get_products_despesa_total(data_inicial, data_final)
     receitas, _ = get_products_receita_total(data_inicial, data_final)
     top_despesas = sorted(despesas.iteritems(), key=lambda (x, y): y['total'], reverse=True)[:5]
-    top_receitas = sorted(receitas.iteritems(), key=lambda (x, y): y['total'], reverse=True)[:5s]
+    top_receitas = sorted(receitas.iteritems(), key=lambda (x, y): y['total'], reverse=True)[:5]
 
     centro = CentroDeCusto.objects.all()
 
