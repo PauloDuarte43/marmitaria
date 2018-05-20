@@ -100,7 +100,9 @@ def index(request):
     context = {
         'centro': centro,
         'despesas': top_despesas,
-        'receitas': top_receitas
+        'receitas': top_receitas,
+        'data_inicial': data_inicial,
+        'data_final': data_final
     }
     return render(request, 'accounting/index.html', context)
 

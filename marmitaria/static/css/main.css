@@ -1,15 +1,20 @@
 .form-inline > * {
     margin:5px 3px;
- }
+}
 
- .card-header-centro {
+.card-header-centro {
     background-color: #89d3ff;
- }
+}
 
- .card-header-receita {
+.card-header-receita {
     background-color: #89ff8c;
- }
+}
 
- .card-header-despesa {
+.card-header-despesa {
     background-color: #ff9889;
- }
+}
+
+.row-despesas-receitas {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}

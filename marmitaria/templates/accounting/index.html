@@ -21,8 +21,20 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row row-despesas-receitas">
     <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <form class="form-inline" method="POST" action="/accounting/">
+                    {% csrf_token %}
+                    <label for="data-inicial" class="col-12 col-lg-2 col-form-label">Data Inicial:</label>
+                    <input class="form-control" type="date" value="{{data_inicial|date:'Y-m-d'}}" id="data-inicial" name="data-inicial">
+                    <label for="data-final" class="col-12 col-lg-2 col-form-label">Data Final:</label>
+                    <input class="form-control" type="date" value="{{data_final|date:'Y-m-d'}}" id="data-final" name="data-final">
+                    <button class="btn btn-primary" type="submit">Filtrar</button>
+                </form>
+            </div>
+        </div>
         <div class="row">
             {% for d in despesas %}
             <div class="col-12 col-lg-3">
