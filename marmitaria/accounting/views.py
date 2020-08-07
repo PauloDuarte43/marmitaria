@@ -35,15 +35,15 @@ def range_date(request):
         start_month = end_month = now.month
         start_year = end_year = now.year
 
-    data_inicial = datetime.datetime(year=start_year,
-                                     month=start_month,
-                                     day=start_day,
+    data_inicial = datetime.datetime(year=2018,
+                                     month=1,
+                                     day=1,
                                      hour=0,
                                      minute=0,
                                      second=0)
-    data_final = datetime.datetime(year=end_year,
-                                   month=end_month,
-                                   day=end_day,
+    data_final = datetime.datetime(year=2018,
+                                   month=12,
+                                   day=31,
                                    hour=23,
                                    minute=59,
                                    second=59)

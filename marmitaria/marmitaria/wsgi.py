@@ -11,7 +11,7 @@ import os
 import sys
 import site
 
-python_home = '/usr/local/venvs/marmita'
+python_home = '/usr/local/venvs/almoco'
 
 site.addsitedir(python_home + '/lib/python2.7/site-packages')
 
